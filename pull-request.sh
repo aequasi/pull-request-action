@@ -53,6 +53,7 @@ create_pull_request() {
     # Check if the branch already has a pull request open 
 
     DATA="{\"base\":\"${TARGET}\", \"head\":\"${SOURCE}\", \"body\":\"${BODY}\"}"
+    echo "curl -sSL -H "${AUTH_HEADER}" -H "${HEADER}" --user "${GITHUB_ACTOR}" -X GET --data "${DATA}" ${PULLS_URL}"
     RESPONSE=$(curl -sSL -H "${AUTH_HEADER}" -H "${HEADER}" --user "${GITHUB_ACTOR}" -X GET --data "${DATA}" ${PULLS_URL})
     PR=$(echo "${RESPONSE}" | jq --raw-output '.[] | .head.ref')
     echo "Response ref: ${PR}"
